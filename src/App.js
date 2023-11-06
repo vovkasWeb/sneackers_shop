@@ -1,27 +1,25 @@
+import Card from './components/Card'
+import Drawer from './components/Drawer'
+import Header from './components/Header'
 function App() {
 	return (
 		<div className='wrapper clear'>
-			<header className="d-flex justify-between">
-				<div className='d-flex aligh-center'>
-					<img width={40} height={40} src='/img/logo.svg' alt='' />
-					<div className='headerInfo'>
-						<h3>REACT SNEAKERS</h3>
-						<p>Магазин лучших кроссовок</p>
+			<Drawer/>
+			<Header />
+
+			<div className='content p-40'>
+				<div className='d-flex align-center justify-between mb-40'>
+					<h1>Все кроссовки</h1>
+					<img width={11} height={11} src='/img/plus.svg' alt='plus' />
+					<div className='search-block d-flex'>
+						<img src='/img/search.svg' alt='Seacrch' />
+						<input placeholder='Поиск...' />
 					</div>
 				</div>
-				<ul className='headerRight'>
-					<li>
-						<img width={18} height={18} src='/img/cart.svg' alt='' />
-						<span>1205 руб.</span>
-					</li>
-					<li>
-						<img width={18} height={18} src='/img/user.svg' alt='' />
-					</li>
-				</ul>
-			</header>
-			<div className='content'>
-				<h1>Все кроссовки</h1>
-				....
+
+				<div className='d-flex'>
+					<Card />
+				</div>
 			</div>
 		</div>
 	)
