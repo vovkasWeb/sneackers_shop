@@ -4,9 +4,8 @@ import Header from './components/Header'
 function App() {
 	return (
 		<div className='wrapper clear'>
-			<Drawer/>
+			<Drawer />
 			<Header />
-
 			<div className='content p-40'>
 				<div className='d-flex align-center justify-between mb-40'>
 					<h1>Все кроссовки</h1>
@@ -18,6 +17,9 @@ function App() {
 				</div>
 
 				<div className='d-flex'>
+					<Card />
+					<Card />
+					<Card />
 					<Card />
 				</div>
 			</div>

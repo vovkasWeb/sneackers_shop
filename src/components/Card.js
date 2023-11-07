@@ -4,7 +4,7 @@ const Card = () => {
 	return (
 		<div className='card'>
 			<div className='favorite'>
-				<img src='/img/heart-liked.svg' alt='unliked' />
+				<img src='/img/heart-unliked.svg' alt='unliked' />
 			</div>
 			<img width={133} height={112} src='/img/sneakers/1.jpg' alt='Sneakers' />
 			<h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
