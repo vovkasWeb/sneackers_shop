@@ -1,35 +1,29 @@
+import { useEffect, useState } from 'react'
 import Card from './components/Card'
 import Drawer from './components/Drawer'
 import Header from './components/Header'
 
-const arr = [
-	{
-		title: 'Мужские Кроссовки Nike Blazer Mid Suede',
-		price: 12999,
-		imgageUrl: '/img/sneakers/1.jpg',
-	},
-	{
-		title: 'Мужские Кроссовки Nike Air Max 270',
-		price: 15600,
-		imgageUrl: '/img/sneakers/2.jpg',
-	},
-	{
-		title: 'Мужские Кроссовки Nike Blazer Mid Suede',
-		price: 8499,
-		imgageUrl: '/img/sneakers/3.jpg',
-	},
-	{
-		title: 'Мужские Кроссовки Nike Blazer Mid Suede',
-		price: 8999,
-		imgageUrl: '/img/sneakers/4.jpg',
-	},
-]
-
 function App() {
+	const [items, setItems] = useState([])
+	const [cartItems, setCartItems] = useState([])
+	const [cardOpened, setCardOpened] = useState(false)
+
+	useEffect(() => {
+		fetch('https://6542a2a7ad8044116ed3b511.mockapi.io/sneakers')
+			.then(res => res.json())
+			.then(obj => setItems(obj))
+	}, [])
+
+	const onAddToCart = obj => {
+		setCartItems(prev => [...prev, obj])
+	}
+
 	return (
 		<div className='wrapper clear'>
-			<Drawer />
-			<Header />
+			{cardOpened && (
+				<Drawer items={cartItems} onClose={() => setCardOpened(false)} />
+			)}
+			<Header onClickCart={() => setCardOpened(true)} />
 			<div className='content p-40'>
 				<div className='d-flex align-center justify-between mb-40'>
 					<h1>Все кроссовки</h1>
@@ -40,15 +34,19 @@ function App() {
 					</div>
 				</div>
 
-				<div className='d-flex'>
-					{arr.map((obj, i) => (
-						<Card
-							key={i}
-							obj={obj}
-							onFavorute={() => console.log('Добавили в закладки')}
-							onPlus={() => console.log('Нажали плюс')}
-						/>
-					))}
+				<div className='d-flex flex-wrap'>
+					{items ? (
+						items.map((item, i) => (
+							<Card
+								key={i}
+								obj={item}
+								onFavorute={() => console.log('Добавили в закладки')}
+								onPlus={obj => onAddToCart(obj)}
+							/>
+						))
+					) : (
+						<h3>Loadind...</h3>
+					)}
 				</div>
 			</div>
 		</div>

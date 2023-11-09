@@ -5,8 +5,9 @@ const Card = ({ obj: { title, price, imgageUrl }, onFavorute, onPlus }) => {
 	const [isAdded, setIsAdded] = useState(false)
 
 	const onClickPlus = () => {
+		onPlus({ title, price, imgageUrl })
 		setIsAdded(!isAdded)
-	}
+	} 
 	return (
 		<div className={styles.card}>
 			<div className={styles.favorite} onClick={onFavorute}>
