@@ -2,8 +2,8 @@ import { useState } from 'react'
 import axios from 'axios'
 import styles from './Card.module.scss'
 
-const Card = ({ obj: { title, price, imgageUrl },id, onFavorute, onPlus,favorited=false }) => {
-	const [isAdded, setIsAdded] = useState(false)
+const Card = ({ obj: { title, price, imgageUrl },id, onFavorute, onPlus,favorited=false, added=false}) => {
+	const [isAdded, setIsAdded] = useState(added)
 	const [isFovorite, setIsFovorite] = useState(favorited)
 
 	const onClickPlus = () => {

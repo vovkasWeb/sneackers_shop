@@ -7,7 +7,8 @@ const Home = ({
 	setSeacrchValue,
 	onChangeSearchInput,
 	onAddToFavorite,
-	onAddToCart
+	onAddToCart,
+	cartItems
 }) => {
 	return (
 		<div className='content p-40'>
@@ -48,6 +49,7 @@ const Home = ({
 								obj={item}
 								id={i}
 								onFavorute={onAddToFavorite}
+								added={cartItems.some(obj=> Number(obj.id)===Number(item.id))}
 								onPlus={obj => onAddToCart(obj)}
 							/>
 						))

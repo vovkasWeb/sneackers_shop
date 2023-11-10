@@ -18,22 +18,34 @@ function App() {
 		// fetch('https://6542a2a7ad8044116ed3b511.mockapi.io/sneakers')
 		// 	.then(res => res.json())
 		// 	.then(obj => setItems(obj))
-		axios
-			.get('https://6542a2a7ad8044116ed3b511.mockapi.io/sneakers')
-			.then(res => setItems(res.data))
-		axios
-			.get('https://6542a2a7ad8044116ed3b511.mockapi.io/cart')
-			.then(res => setCartItems(res.data))
+		async function fetchData() {
+			const cartResponse = await axios.get('https://6542a2a7ad8044116ed3b511.mockapi.io/cart')
+			const favoritesResponse = await axios.get('https://654e52f4cbc325355742bfee.mockapi.io/favorites')
+			const itemsResponse = await axios.get('https://6542a2a7ad8044116ed3b511.mockapi.io/sneakers')
 
-		axios
-			.get('https://654e52f4cbc325355742bfee.mockapi.io/favorites')
-			.then(res => setFavorites(res.data))
+			setItems(itemsResponse.data)
+			setCartItems(cartResponse.data)
+			setFavorites(favoritesResponse.data)
+		}
+		fetchData()
 	}, [])
 
 	const onAddToCart = obj => {
-		console.log(obj)
-		axios.post('https://6542a2a7ad8044116ed3b511.mockapi.io/cart', obj)
-		setCartItems(prev => [...prev, obj])
+		try {
+			if (cartItems.find(item => Number(item.id) === Number(obj.id))) {
+				setCartItems(prev =>
+					prev.filter(item => Number(item.id) !== Number(obj.id))
+				)
+				axios.delete(
+					`https://6542a2a7ad8044116ed3b511.mockapi.io/cart${obj.id}`
+				)
+			} else {
+				axios.post('https://6542a2a7ad8044116ed3b511.mockapi.io/cart', obj)
+				setCartItems(prev => [...prev, obj])
+			}
+		} catch (error) {
+			console.log(error)
+		}
 	}
 	const onDeleteCart = id => {
 		axios.delete(`https://6542a2a7ad8044116ed3b511.mockapi.io/cart/${id}`)
@@ -45,9 +57,9 @@ function App() {
 				`https://654e52f4cbc325355742bfee.mockapi.io/favorites/${obj.id}`
 			)
 			setFavorites(prev => [...prev, obj])
-		}else{
-		axios.post('https://654e52f4cbc325355742bfee.mockapi.io/favorites', obj)
-		setFavorites(prev => [...prev, obj])
+		} else {
+			axios.post('https://654e52f4cbc325355742bfee.mockapi.io/favorites', obj)
+			setFavorites(prev => [...prev, obj])
 		}
 	}
 
@@ -71,6 +83,7 @@ function App() {
 					element={
 						<Home
 							items={items}
+							cartItems={cartItems}
 							seacrchValue={seacrchValue}
 							setSeacrchValue={setSeacrchValue}
 							onChangeSearchInput={onChangeSearchInput}
