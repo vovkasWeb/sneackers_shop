@@ -2,12 +2,20 @@ import { useState } from 'react'
 import axios from 'axios'
 import styles from './Card.module.scss'
 
-const Card = ({ obj: { title, price, imgageUrl },id, onFavorute, onPlus,favorited=false, added=false}) => {
+const Card = ({
+	obj: { title, price, imgageUrl },
+	id,
+	onFavorute,
+	onPlus,
+	favorited = false,
+	added = false,
+	loading = false,
+}) => {
 	const [isAdded, setIsAdded] = useState(added)
 	const [isFovorite, setIsFovorite] = useState(favorited)
 
 	const onClickPlus = () => {
-		onPlus({ title, price, imgageUrl,id })
+		onPlus({ title, price, imgageUrl, id })
 		setIsAdded(!isAdded)
 	}
 	const onAddToCart = obj => {
@@ -15,7 +23,7 @@ const Card = ({ obj: { title, price, imgageUrl },id, onFavorute, onPlus,favorite
 		axios.post('https://6542a2a7ad8044116ed3b511.mockapi.io/cart', obj)
 		// setCartItems(prev => [...prev, obj])
 	}
-	const onClickFavorite = () =>{
+	const onClickFavorite = () => {
 		onFavorute({ title, price, imgageUrl, id })
 		setIsFovorite(!isFovorite)
 	}
